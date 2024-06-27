@@ -1,6 +1,20 @@
 #main {
     margin: 0 auto;
+    padding: 16px;
     width: 80vw;
     height: 100vh;
     background-color: #563232;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+}
+.card {
+    background-color: #e7cfb4;
+    border: 2px solid #84240c;
+    padding: 8px;
+    height: 200px;
+    max-width: 400px;
+    flex: auto;
+    text-align: center;
 }

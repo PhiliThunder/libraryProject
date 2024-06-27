@@ -1,4 +1,23 @@
-const myLibrary = []; //Stores all books.
+const library = [ //Stores all books.
+    {
+        "title": "Torpis",
+        "author": "Luppis Sopper",
+        "pages": 443,
+        "read": "already read"
+    },
+    {
+        "title": "Jender",
+        "author": "Ulser Olsen",
+        "pages": 223,
+        "read": "already read"
+    },
+    {
+        "title": "Politer",
+        "author": "Poppe Royny",
+        "pages": 234,
+        "read": "already read"
+    }
+]; 
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -22,3 +41,14 @@ function addBookToLibrary() {
     const newBook = new Book(title, author, pages, read);
     myLibrary.push(newBook);
 }
+
+function displayBooks(books) {
+    const container = document.getElementById("main");
+    books.forEach(book => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.textContent = book.title;
+        container.appendChild(card);
+    });
+}
+displayBooks(library);

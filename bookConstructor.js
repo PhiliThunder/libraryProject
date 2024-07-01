@@ -1,54 +1,75 @@
 const library = [ //Stores all books.
-    {
-        "title": "Torpis",
-        "author": "Luppis Sopper",
-        "pages": 443,
-        "read": "already read"
-    },
-    {
-        "title": "Jender",
-        "author": "Ulser Olsen",
-        "pages": 223,
-        "read": "already read"
-    },
-    {
-        "title": "Politer",
-        "author": "Poppe Royny",
-        "pages": 234,
-        "read": "already read"
-    }
-]; 
+    ]; 
 
-function Book(title, author, pages, read) {
+function Book(title, author, pages, read, index) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     if (read) {
-        this.read = "already read";
+        this.read = "Already read";
     } else {
-        this.read = "not read yet";
+        this.read = "Not read yet";
     }
-    this.info = function() {
-        return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`;
-    }
+    this.index = index;
 }
 
-function addBookToLibrary() {
-    const title = prompt("What is the books title?");
-    const author = prompt("Who wrote the book?");
-    const pages = prompt("How many pages does the book contain?");
-    const read = prompt("Have you read the book yet? Type something if yes, otherwise leave empty")
-    const newBook = new Book(title, author, pages, read);
-    myLibrary.push(newBook);
+function addBookToLibrary(title, author, pages, read, index) {
+    const newBook = new Book(title, author, pages, read, index);
+    library.push(newBook);
 }
 
 function displayBooks(books) {
-    const container = document.getElementById("main");
+    const container = document.querySelector("#bookshelf");
+    container.replaceChildren(); //Removes all books, before readding.
     books.forEach(book => {
         const card = document.createElement("div");
         card.className = "card";
-        card.textContent = book.title;
+        const title =  document.createElement("h1");
+        title.textContent = book.title;
+        card.appendChild(title);
+        const author =  document.createElement("h2");
+        author.textContent = book.author;
+        card.appendChild(author);
+        const pages =  document.createElement("h3");
+        pages.textContent = book.pages + " pages";
+        card.appendChild(pages);
+        const read =  document.createElement("h4");
+        read.textContent = book.read;
+        card.appendChild(read);
+        const removeButton = document.createElement("button");
+        removeButton.className = "remove-button";
+        removeButton.textContent = "Remove book";
+        card.appendChild(removeButton);
         container.appendChild(card);
     });
 }
+
+const dialog = document.querySelector("#new-book");
+const showButton = document.querySelector("#open-dialog");
+const closeButton = document.querySelector("#close-dialog");
+const submitBook = document.querySelector("#submit-book");
+const form = document.querySelector("#book-form");
+
+showButton.addEventListener("click", () => {
+    dialog.showModal();
+});
+closeButton.addEventListener("click", () => {
+    dialog.close();
+});
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = new FormData(form);
+    const formEntries = Object.fromEntries(formData.entries());
+    
+    const title = formEntries.title;
+    const author = formEntries.author;
+    const pages = formEntries.pages;
+    const read = formEntries["read-or-not"] === "yes";
+
+    addBookToLibrary(title, author, pages, read)
+    displayBooks(library);
+    dialog.close();
+    form.reset();
+})
+
 displayBooks(library);

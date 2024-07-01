@@ -1,20 +1,36 @@
+:root {
+    --primary: #a97a57;
+    --secondary: #9a5938;
+    --tertiary: #bfb2a1;
+    --primary-accent: #008080;
+    --secondary-accent: #56483b;
+}
 #main {
-    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    justify-items: center;
+}
+#bookshelf {
+    grid-column: 2 / 3;
     padding: 16px;
     width: 80vw;
     height: 100vh;
-    background-color: #563232;
+    background-color: var(--primary);
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
     justify-content: center;
 }
 .card {
-    background-color: #e7cfb4;
-    border: 2px solid #84240c;
+    background-color: var(--primary-accent);
+    border: 2px solid var(--secondary-accent);
     padding: 8px;
-    height: 200px;
-    max-width: 400px;
+    height: 250px;
+    max-width: 300px;
     flex: auto;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: space-between;
 }

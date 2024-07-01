@@ -9,8 +9,27 @@
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
+    <dialog id="new-book">
+        <h1>Fill out these details to add a new book to the bookshelf:</h1>
+        <form id="book-form" method="dialog">
+            <label for="title">Title:</label><br>
+            <input type="text" id="title" name="title" required><br>
+            <label for="author">Author:</label><br>
+            <input type="text" id="author" name="author" required><br>
+            <label for="pages">Number of pages:</label><br>
+            <input type="number" id="pages" name="pages" required><br>
+            <label>Have you read the book already?</label><br>
+            <input type="radio" id="yes" name="read-or-not" value="yes" required>
+            <label for="yes">Yes</label><br>
+            <input type="radio" id="no" name="read-or-not" value="no">
+            <label for="no">No</label><br>
+            <button type="submit" id="submit-book">Add book</button>
+        </form>
+        <button id="close-dialog">Close</button>
+    </dialog>
     <div id="main">
-        
+        <button id="open-dialog">NEW BOOK</button>
+        <div id="bookshelf"></div>
     </div>
 </body>
 </html>

@@ -1,5 +1,5 @@
-const library = [ //Stores all books.
-    ]; 
+let library = [ //Stores all books.
+];
 
 function Book(title, author, pages, read, index) {
     this.title = title;
@@ -11,11 +11,25 @@ function Book(title, author, pages, read, index) {
         this.read = "Not read yet";
     }
     this.index = index;
+    this.selfDestruct = function () {
+        removeBookFromLibrary(index);
+    }
 }
 
-function addBookToLibrary(title, author, pages, read, index) {
+let bookCounter = 0;
+
+function addBookToLibrary(title, author, pages, read) {
+    const index = bookCounter;
     const newBook = new Book(title, author, pages, read, index);
     library.push(newBook);
+    bookCounter += 1;
+}
+
+function removeBookFromLibrary(index) {
+    library = library.filter(function (book) {
+        return book["index"] !== index;
+    })
+    displayBooks(library);
 }
 
 function displayBooks(books) {
@@ -24,16 +38,16 @@ function displayBooks(books) {
     books.forEach(book => {
         const card = document.createElement("div");
         card.className = "card";
-        const title =  document.createElement("h1");
+        const title = document.createElement("h1");
         title.textContent = book.title;
         card.appendChild(title);
-        const author =  document.createElement("h2");
+        const author = document.createElement("h2");
         author.textContent = book.author;
         card.appendChild(author);
-        const pages =  document.createElement("h3");
+        const pages = document.createElement("h3");
         pages.textContent = book.pages + " pages";
         card.appendChild(pages);
-        const read =  document.createElement("h4");
+        const read = document.createElement("h4");
         read.textContent = book.read;
         card.appendChild(read);
         const removeButton = document.createElement("button");
@@ -41,6 +55,9 @@ function displayBooks(books) {
         removeButton.textContent = "Remove book";
         card.appendChild(removeButton);
         container.appendChild(card);
+        removeButton.addEventListener("click", () => {
+            removeBookFromLibrary(book["index"]);
+        });
     });
 }
 
@@ -60,7 +77,7 @@ form.addEventListener("submit", (event) => {
     event.preventDefault();
     const formData = new FormData(form);
     const formEntries = Object.fromEntries(formData.entries());
-    
+
     const title = formEntries.title;
     const author = formEntries.author;
     const pages = formEntries.pages;
@@ -71,5 +88,3 @@ form.addEventListener("submit", (event) => {
     dialog.close();
     form.reset();
 })
-
-displayBooks(library);

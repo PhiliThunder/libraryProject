@@ -1,5 +1,5 @@
 let library = [ //Stores all books.
-];
+    ];
 
 function Book(title, author, pages, read, index) {
     this.title = title;
@@ -13,6 +13,14 @@ function Book(title, author, pages, read, index) {
     this.index = index;
     this.selfDestruct = function () {
         removeBookFromLibrary(index);
+    }
+    this.toggleRead = function () {
+        if (this.read === "Already read") {
+            this.read = "Not read yet";
+        } else {
+            this.read = "Already read";
+        }
+
     }
 }
 
@@ -29,10 +37,10 @@ function removeBookFromLibrary(index) {
     library = library.filter(function (book) {
         return book["index"] !== index;
     })
-    displayBooks(library);
+    bookUpdater(library);
 }
 
-function displayBooks(books) {
+function bookUpdater(books) {
     const container = document.querySelector("#bookshelf");
     container.replaceChildren(); //Removes all books, before readding.
     books.forEach(book => {
@@ -53,11 +61,19 @@ function displayBooks(books) {
         const removeButton = document.createElement("button");
         removeButton.className = "remove-button";
         removeButton.textContent = "Remove book";
+        const readButton = document.createElement("button");
+        readButton.className = "read-button";
+        readButton.textContent = "Toggle Read status";
+        card.appendChild(readButton);
         card.appendChild(removeButton);
         container.appendChild(card);
         removeButton.addEventListener("click", () => {
             removeBookFromLibrary(book["index"]);
         });
+        readButton.addEventListener("click", () => {
+            book.toggleRead();
+            read.textContent = book.read;
+        })
     });
 }
 
@@ -84,7 +100,7 @@ form.addEventListener("submit", (event) => {
     const read = formEntries["read-or-not"] === "yes";
 
     addBookToLibrary(title, author, pages, read)
-    displayBooks(library);
+    bookUpdater(library);
     dialog.close();
     form.reset();
 })
